@@ -28,7 +28,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/GoTheExtraMile/ants"
+	"ants"
 )
 
 var sum int32

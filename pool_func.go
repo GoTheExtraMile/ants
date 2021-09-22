@@ -27,7 +27,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/GoTheExtraMile/ants/internal"
+	"ants/internal"
 )
 
 // PoolWithFunc accepts the tasks from client,
