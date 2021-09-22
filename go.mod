@@ -1,4 +1,4 @@
-module ants
+module github.com/GoTheExtraMile/ants
 
 go 1.14
 

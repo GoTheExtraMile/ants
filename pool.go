@@ -28,7 +28,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"ants/internal"
+	"github.com/GoTheExtraMile/ants/internal"
 )
 
 // Pool accepts the tasks from client, it limits the total of goroutines to a given number by recycling goroutines.
