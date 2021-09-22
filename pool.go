@@ -179,7 +179,10 @@ func (p *Pool) Cap() int {
 
 // Tune changes the capacity of this pool, note that it is noneffective to the infinite or pre-allocation pool.
 func (p *Pool) Tune(size int) {
+	p.custem.L.Lock()
 	defer p.custem.Signal()
+	defer p.custem.L.Unlock()
+
 	if capacity := p.Cap(); capacity == -1 || size <= 0 || size == capacity || p.options.PreAlloc {
 		return
 	}
@@ -223,7 +226,7 @@ func (p *Pool) decRunning() {
 	atomic.AddInt32(&p.running, -1)
 }
 
-func (p *Pool) Next() {
+func (p *Pool) Next(task func()) error{
 	p.custem.L.Lock()
 	defer p.custem.L.Unlock()
 	Loop:for {
@@ -232,7 +235,7 @@ func (p *Pool) Next() {
 			p.custem.Wait()
 			goto Loop
 		}
-		return
+		return p.Submit(task)
 	}
 
 }
