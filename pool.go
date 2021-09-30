@@ -240,6 +240,21 @@ func (p *Pool) Next(task func()) error{
 
 }
 
+func (p *Pool) Next2(task func()) error {
+	p.custem.L.Lock()
+	defer p.custem.L.Unlock()
+    for {
+	fmt.Printf("当前可用协程%v\r\n", p.Free())
+	if p.Free() <= 0 {
+		p.custem.Wait()
+		return fmt.Errorf("goto")
+	}
+	return p.Submit(task)
+}
+
+}
+
+
 // retrieveWorker returns a available worker to run the tasks.
 func (p *Pool) retrieveWorker() (w *goWorker) {
 	spawnWorker := func() {
